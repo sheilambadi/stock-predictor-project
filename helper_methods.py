@@ -33,9 +33,9 @@ def build_model(layers):
     # Initialize the RNN
     model = Sequential()
     # Add the input layer and the LSTM layer
-    model.add(LSTM(128, input_shape=(layers[1], layers[0]), return_sequences=True, stateful=True, batch_input_shape=(1,None,6)))
+    model.add(LSTM(128, input_shape=(layers[1], layers[0]), return_sequences=True))
     model.add(Dropout(d))
-    model.add(LSTM(64, input_shape=(layers[1], layers[0]), return_sequences=False, stateful=True))
+    model.add(LSTM(64, input_shape=(layers[1], layers[0]), return_sequences=False))
     model.add(Dropout(d))
     # Add the output layer
     model.add(Dense(16,activation='relu',kernel_initializer='uniform'))        
