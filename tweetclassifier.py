@@ -11,7 +11,7 @@ def getTweets(searchKey):
 def tweets(search):
     tweetResults = getTweets(search)
     # save reults to csv file
-    with open (str(search)+'.csv', 'a', newline='') as f:
+    with open ('Tweets CSV Files/'+str(search)+'.csv', 'a', newline='') as f:
         fieldnames = ['searchKey', 'tweetId', 'tweetDate', 'tweet', 'polarity']
         thewriter = csv.DictWriter(f, fieldnames=fieldnames)
 
@@ -23,4 +23,4 @@ def tweets(search):
                 polarity = blob.sentiment.polarity;
                 thewriter.writerow({'searchKey' : str(search), 'tweetId' : tweet.id,'tweetDate': tweet.created_at, 'tweet' : clean_tweet, 'polarity':polarity})
 
-tweets('#nflx')
+tweets('#gm')
