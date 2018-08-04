@@ -12,12 +12,15 @@ import numpy as np
 from sklearn import preprocessing
 from helper_methods import load_data, build_model
 import math
+from numpy import newaxis
 
 # load training data
 df = pd.read_csv('Stock CSV Files/stock_market_data-TWTR.csv')
 
 # Sort DataFrame by date
 df = df.sort_values('Date')
+
+print(df)
 
 # normalize data
 cols = [2,3,4,5,6,7]
@@ -33,13 +36,35 @@ model = load_model('Trained Stock Model/'+'stock_predictor.h5')
 model.compile(loss='mse',optimizer='rmsprop',metrics=['accuracy'])
 
 window = 5
-X_train, y_train, X_test, y_test = load_data(df_normalized[::-1], window)
+X_train, y_train, X_test, y_test = load_data(df_normalized[::-1], 5)
 # make a prediction
 # creates states
 predictions = model.predict(X_test)
+#print(X_test)
 
 # Plot the predictions!
 plt.plot(predictions ,color='red', label='Predicted Values')
 plt.plot(y_test,color='blue', label='Actual Test Values')
 plt.legend(loc='upper left')
 plt.show()
+
+'''
+future = []
+currentStep = X_test[:,:,:] #last step from the previous prediction
+
+
+for i in range(50):
+    currentStep = model.predict(X_test) #get the next step
+    future.append(currentStep) #store the future steps    
+
+predicted_values = future
+print(predicted_values)
+
+#after processing a sequence, reset the states for safety
+model.reset_states()
+
+# Plot the predictions!
+plt.plot(predicted_values)
+plt.show()
+'''
+
