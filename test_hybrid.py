@@ -5,6 +5,10 @@ import pandas as pd
 pd.core.common.is_list_like = pd.api.types.is_list_like
 from pandas_datareader import data
 import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use("TkAgg")
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
+from matplotlib.figure import Figure
 import datetime as dt
 import urllib.request, json
 import os
@@ -29,27 +33,20 @@ min_max_scaler = preprocessing.MinMaxScaler()
 np_scaled = min_max_scaler.fit_transform(df_subset)
 df_normalized = pd.DataFrame(np_scaled)
 
+# load trained mdel
+model = load_model('Trained Stock Model/'+'hybrid_stock_predictor.h5')
+
 # Loading the model sequence structure
 window = 5
 X_train, y_train, X_test, y_test = load_data(df_normalized[::-1], window)
-
-# Calculate RMS/RMSE results
-trainScore = model.evaluate(X_train, y_train, verbose=0)
-print('Train Score: %.2f MSE (%.2f RMSE)' % (trainScore[0], math.sqrt(trainScore[0])))
-
-testScore = model.evaluate(X_test, y_test, verbose=0)
-print('Test Score: %.2f MSE (%.2f RMSE)' % (testScore[0], math.sqrt(testScore[0])))
 
 # make a prediction
 # creates states
 predictions = model.predict(X_test)
 
-# save trained model
-model.save('Trained Stock Model/'+'hybrid_stock_predictor.h5')
-
 def plotHybridPredictions(window):
-    fig = Figure(figsize=(6,6))
-    a = fig.add_subplot(222)
+    fig = Figure(figsize=(3,3))
+    a = fig.add_subplot(122)
     # The adjusted close accounts for stock splits, so that is what wes graph
     a.plot(predictions ,color='red', label='Predicted Values')
     a.plot(y_test,color='blue', label='Actual Test Values')
