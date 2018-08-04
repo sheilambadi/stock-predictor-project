@@ -14,7 +14,7 @@ from helper_methods import load_data, build_model
 import math
 
 # load training data
-df = pd.read_csv('Stock CSV Files/stock_market_data-FB.csv')
+df = pd.read_csv('Stock CSV Files/stock_market_data-TWTR.csv')
 
 # Sort DataFrame by date
 df = df.sort_values('Date')
