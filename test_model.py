@@ -64,12 +64,9 @@ def plotPredictions(window, ticker):
     a.set_xlabel('No. of Days')
     a.legend(loc='upper left')
     canvas = FigureCanvasTkAgg(fig, master=window)
-    canvas.get_tk_widget().pack(side=tk.RIGHT, expand=True)
+    canvas.get_tk_widget().pack(side=tk.LEFT, expand=True)
     canvas.draw()
-    return canvas
 
-def deleteCanvas(canvas):
-    canvas.get_tk_widget().delete("all")
 
 '''
 future = []

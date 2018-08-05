@@ -1,11 +1,28 @@
 from tkinter import *
 import tkinter as tk
-from test_model import plotPredictions, deleteCanvas
+from test_model import plotPredictions
 from test_hybrid import plotHybridPredictions
 
 # declare main window
 window = tk.Tk()
 
+window.title("Stock Predictor")
+window.geometry("400x400")
+
+# function to plot graph
+
+def plotInUI(ticker):
+    plotPredictions(window, ticker)
+    plotHybridPredictions(window, ticker)
+
+aapl_button = tk.Button(text="AAPL", bg="green", command=plotInUI('AAPL'))
+aapl_button.pack()
+
+#amzn_button = tk.Button(text="AMZN", bg="green", command=plotInUI('AMZN'))
+#amzn_button.pack()
+
+window.mainloop()
+'''
 # Add a grid
 mainframe = Frame(window)
 mainframe.grid(column=0,row=0, sticky=(N,W,E,S) )
@@ -50,6 +67,7 @@ def plotInUI():
 
 display_button = tk.Button(text="Display", bg="green", command=plotInUI)
 display_button.pack()
+'''
+
 
     
-window.mainloop()
