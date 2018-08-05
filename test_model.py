@@ -20,48 +20,56 @@ import math
 from numpy import newaxis
 
 # load training data
-df = pd.read_csv('Stock CSV Files/stock_market_data-AAPL.csv')
+def getTickerClicked(ticker):
+    # df = pd.read_csv('Stock CSV Files/stock_market_data-AAPL.csv')
+    df = pd.read_csv('Stock CSV Files/stock_market_data-'+ ticker +'.csv')
 
-# Sort DataFrame by date
-df = df.sort_values('Date')
+    # Sort DataFrame by date
+    df = df.sort_values('Date')
 
-# print(df)
+    # print(df)
 
-# normalize data
-cols = [2,3,4,5,6,7]
-df_subset = df[df.columns[cols]]
-min_max_scaler = preprocessing.MinMaxScaler()
-np_scaled = min_max_scaler.fit_transform(df_subset)
-df_normalized = pd.DataFrame(np_scaled)
+    # normalize data
+    cols = [2,3,4,5,6,7]
+    df_subset = df[df.columns[cols]]
+    min_max_scaler = preprocessing.MinMaxScaler()
+    np_scaled = min_max_scaler.fit_transform(df_subset)
+    df_normalized = pd.DataFrame(np_scaled)
 
-# load trained mdel
-model = load_model('Trained Stock Model/'+'stock_predictor.h5')
+    # load trained mdel
+    model = load_model('Trained Stock Model/'+'stock_predictor.h5')
 
-# compile model
-model.compile(loss='mse',optimizer='rmsprop',metrics=['accuracy'])
+    # compile model
+    model.compile(loss='mse',optimizer='rmsprop',metrics=['accuracy'])
 
-window = 5
-X_train, y_train, X_test, y_test = load_data(df_normalized[::-1], 5)
-# make a prediction
-# creates states
-predictions = model.predict(X_test)
-#print(X_test)
+    window = 5
+    X_train, y_train, X_test, y_test = load_data(df_normalized[::-1], 5)
+    # make a prediction
+    # creates states
+    predictions = model.predict(X_test)
+    return [predictions, y_test]
+    #print(X_test)
 
 # Plot the predictions!
-def plotPredictions(window):
+def plotPredictions(window, ticker):
+    getTickerClicked(ticker)
+    predictions1, y_test1 = getTickerClicked(ticker)
     fig = Figure(figsize=(6,4))
     a = fig.add_subplot(121)
     # The adjusted close accounts for stock splits, so that is what wes graph
-    a.plot(predictions ,color='red', label='Predicted Values')
-    a.plot(y_test,color='blue', label='Actual Test Values')
-    a.set_title('Model with Stock Prices Only')
+    a.plot(predictions1 ,color='red', label='Predicted Values')
+    a.plot(y_test1,color='blue', label='Actual Test Values')
+    a.set_title(ticker + ' Model with Stock Prices Only')
     a.set_ylabel('Predicted Value (Normalized)');
     a.set_xlabel('No. of Days')
     a.legend(loc='upper left')
-
     canvas = FigureCanvasTkAgg(fig, master=window)
-    canvas.get_tk_widget().pack(side=tk.LEFT, expand=True)
+    canvas.get_tk_widget().pack(side=tk.RIGHT, expand=True)
     canvas.draw()
+    return canvas
+
+def deleteCanvas(canvas):
+    canvas.get_tk_widget().delete("all")
 
 '''
 future = []

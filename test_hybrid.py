@@ -19,40 +19,45 @@ import math
 from numpy import newaxis
 import tkinter as tk
 
-# columns
-hybrid_columns = ['Date','Low','High','Close','Open','Volume', 'Adj Close', 'Polarity', 'Ticker']
-# load training data
-df = pd.read_csv('stock_polarity_data.csv', names = hybrid_columns)
-# Sort DataFrame by date
-# df = df.sort_values('Date')
-df = df.loc[df['Ticker'] == 'AAPL']
+def getClickedTicker(ticker):
+    # columns
+    hybrid_columns = ['Date','Low','High','Close','Open','Volume', 'Adj Close', 'Polarity', 'Ticker']
+    # load training data
 
-# normalize data
-cols = [1,2,3,4,5,6,7]
-df_subset = df[df.columns[cols]]
-# print(df_subset)
-min_max_scaler = preprocessing.MinMaxScaler()
-np_scaled = min_max_scaler.fit_transform(df_subset)
-df_normalized = pd.DataFrame(np_scaled)
+    df = pd.read_csv('stock_polarity_data.csv', names = hybrid_columns)
+    # Sort DataFrame by date
+    # df = df.sort_values('Date')
+    df = df.loc[df['Ticker'] == ticker]
 
-# load trained mdel
-model = load_model('Trained Stock Model/'+'hybrid_stock_predictor.h5')
+    # normalize data
+    cols = [1,2,3,4,5,6,7]
+    df_subset = df[df.columns[cols]]
+    # print(df_subset)
+    min_max_scaler = preprocessing.MinMaxScaler()
+    np_scaled = min_max_scaler.fit_transform(df_subset)
+    df_normalized = pd.DataFrame(np_scaled)
 
-# Loading the model sequence structure
-window = 5
-X_train, y_train, X_test, y_test = load_data(df_normalized[::-1], window)
+    # load trained mdel
+    model = load_model('Trained Stock Model/'+'hybrid_stock_predictor.h5')
 
-# make a prediction
-# creates states
-predictions = model.predict(X_test)
+    # Loading the model sequence structure
+    window = 5
+    X_train, y_train, X_test, y_test = load_data(df_normalized[::-1], window)
 
-def plotHybridPredictions(window):
+    # make a prediction
+    # creates states
+    predictions = model.predict(X_test)
+    return [predictions, y_test]
+
+def plotHybridPredictions(window, ticker):
+    getClickedTicker(ticker)
+    predictions1, y_test1 = getClickedTicker(ticker)
     fig = Figure(figsize=(6,4))
     a = fig.add_subplot(122)
     # The adjusted close accounts for stock splits, so that is what wes graph
-    a.plot(predictions ,color='red', label='Predicted Values')
-    a.plot(y_test,color='blue', label='Actual Test Values')
-    a.set_title(' AAPL Stock Sentiment Hybrid Model')
+    a.plot(predictions1 ,color='red', label='Predicted Values')
+    a.plot(y_test1,color='blue', label='Actual Test Values')
+    a.set_title(ticker + ' Stock Sentiment Hybrid Model')
     a.set_ylabel('Predicted Value (Normalized)')
     a.set_xlabel('No. of Days')
     a.legend(loc='upper left')
