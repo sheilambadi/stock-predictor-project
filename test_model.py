@@ -7,6 +7,7 @@ from pandas_datareader import data
 import matplotlib.pyplot as plt
 import matplotlib
 matplotlib.use("TkAgg")
+import tkinter as tk
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 from matplotlib.figure import Figure
 import datetime as dt
@@ -48,18 +49,18 @@ predictions = model.predict(X_test)
 
 # Plot the predictions!
 def plotPredictions(window):
-    fig = Figure(figsize=(3,3))
+    fig = Figure(figsize=(6,4))
     a = fig.add_subplot(121)
     # The adjusted close accounts for stock splits, so that is what wes graph
     a.plot(predictions ,color='red', label='Predicted Values')
     a.plot(y_test,color='blue', label='Actual Test Values')
     a.set_title('Model with Stock Prices Only')
-    a.set_ylabel('Normalized Prices');
+    a.set_ylabel('Predicted Value (Normalized)');
     a.set_xlabel('No. of Days')
     a.legend(loc='upper left')
 
     canvas = FigureCanvasTkAgg(fig, master=window)
-    canvas.get_tk_widget().pack()
+    canvas.get_tk_widget().pack(side=tk.LEFT, expand=True)
     canvas.draw()
 
 '''

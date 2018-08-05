@@ -17,6 +17,7 @@ from sklearn import preprocessing
 from helper_methods import load_data, build_model
 import math
 from numpy import newaxis
+import tkinter as tk
 
 # columns
 hybrid_columns = ['Date','Low','High','Close','Open','Volume', 'Adj Close', 'Polarity', 'Ticker']
@@ -46,16 +47,16 @@ X_train, y_train, X_test, y_test = load_data(df_normalized[::-1], window)
 predictions = model.predict(X_test)
 
 def plotHybridPredictions(window):
-    fig = Figure(figsize=(3,3))
+    fig = Figure(figsize=(6,4))
     a = fig.add_subplot(122)
     # The adjusted close accounts for stock splits, so that is what wes graph
     a.plot(predictions ,color='red', label='Predicted Values')
     a.plot(y_test,color='blue', label='Actual Test Values')
     a.set_title(' AAPL Stock Sentiment Hybrid Model')
-    a.set_ylabel('Predicted Value');
+    a.set_ylabel('Predicted Value (Normalized)')
     a.set_xlabel('No. of Days')
     a.legend(loc='upper left')
 
     canvas = FigureCanvasTkAgg(fig, master=window)
-    canvas.get_tk_widget().pack()
+    canvas.get_tk_widget().pack(side=tk.LEFT, expand=True)
     canvas.draw()
