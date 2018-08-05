@@ -19,7 +19,7 @@ hybrid_columns = ['Date','Low','High','Close','Open','Volume', 'Adj Close', 'Pol
 # load training data
 df = pd.read_csv('stock_polarity_data.csv', names = hybrid_columns)
 # Sort DataFrame by date
-df = df.sort_values('Date')
+# df = df.sort_values('Date')
 
 # normalize data
 cols = [1,2,3,4,5,6,7]
@@ -32,6 +32,19 @@ df_normalized = pd.DataFrame(np_scaled)
 # Loading the model sequence structure
 window = 5
 X_train, y_train, X_test, y_test = load_data(df_normalized[::-1], window)
+
+# Loading the model sequence structure
+model = build_model([7,window,1])
+
+# Executing the model
+# Use the training set to train the model
+model.fit(
+    X_train,
+    y_train,
+    batch_size=512,
+    epochs=7000,
+    validation_split=0.1,
+    verbose=1)
 
 # Calculate RMS/RMSE results
 trainScore = model.evaluate(X_train, y_train, verbose=0)
@@ -47,6 +60,15 @@ predictions = model.predict(X_test)
 # save trained model
 model.save('Trained Stock Model/'+'hybrid_stock_predictor.h5')
 
+plt.plot(predictions ,color='red', label='Predicted Values')
+plt.plot(y_test,color='blue', label='Actual Test Values')
+# plt.set_title('Stock Sentiment Hybrid Model')
+# plt.set_ylabel('Normalized Prices');
+# plt.set_xlabel('No. of Days')
+plt.legend(loc='upper left')
+plt.show()
+
+'''
 def plotHybridPredictions(window):
     fig = Figure(figsize=(6,6))
     a = fig.add_subplot(222)
@@ -61,3 +83,4 @@ def plotHybridPredictions(window):
     canvas = FigureCanvasTkAgg(fig, master=window)
     canvas.get_tk_widget().pack()
     canvas.draw()
+'''

@@ -23,7 +23,8 @@ hybrid_columns = ['Date','Low','High','Close','Open','Volume', 'Adj Close', 'Pol
 # load training data
 df = pd.read_csv('stock_polarity_data.csv', names = hybrid_columns)
 # Sort DataFrame by date
-df = df.sort_values('Date')
+# df = df.sort_values('Date')
+df = df.loc[df['Ticker'] == 'AAPL']
 
 # normalize data
 cols = [1,2,3,4,5,6,7]
@@ -50,8 +51,8 @@ def plotHybridPredictions(window):
     # The adjusted close accounts for stock splits, so that is what wes graph
     a.plot(predictions ,color='red', label='Predicted Values')
     a.plot(y_test,color='blue', label='Actual Test Values')
-    a.set_title('Stock Sentiment Hybrid Model')
-    a.set_ylabel('Normalized Prices');
+    a.set_title(' AAPL Stock Sentiment Hybrid Model')
+    a.set_ylabel('Predicted Value');
     a.set_xlabel('No. of Days')
     a.legend(loc='upper left')
 

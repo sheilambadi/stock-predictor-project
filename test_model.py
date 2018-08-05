@@ -19,7 +19,7 @@ import math
 from numpy import newaxis
 
 # load training data
-df = pd.read_csv('Stock CSV Files/stock_market_data-TWTR.csv')
+df = pd.read_csv('Stock CSV Files/stock_market_data-AAPL.csv')
 
 # Sort DataFrame by date
 df = df.sort_values('Date')
