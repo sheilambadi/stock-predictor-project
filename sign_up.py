@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import messagebox as ms
 import sqlite3
-from reports import DisplayReports
+# from reports import DisplayReports
 
 # create database and add users (if it does not not exists)
 with sqlite3.connect('users.db') as db:
@@ -51,7 +51,6 @@ class main:
         c.execute(find_user,[(self.username.get())])        
         if c.fetchall():
             ms.showerror('Error!','Username Taken Try a Diffrent One.')
-            # showui = DisplayReports()
         else:
             ms.showinfo('Success!','Account Created!')
             self.log()
@@ -96,6 +95,13 @@ class main:
         Button(self.crf,text = 'Create Account',bd = 3 ,font = ('',15),padx=5,pady=5,command=self.new_user).grid()
         Button(self.crf,text = 'Go to Login',bd = 3 ,font = ('',15),padx=5,pady=5,command=self.log).grid(row=2,column=1)
 
+#Create Object and setup window
+root = Tk()
+root.title('Stock Predictor')
+root.geometry('720x480')
+main(root)
+root.mainloop()
+'''
 if __name__ == '__main__':
 	#Create Object and setup window
     root = Tk()
@@ -103,3 +109,4 @@ if __name__ == '__main__':
     root.geometry('720x480')
     main(root)
     root.mainloop()
+'''

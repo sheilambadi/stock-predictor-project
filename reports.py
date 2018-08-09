@@ -11,8 +11,9 @@ import matplotlib
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 from matplotlib.figure import Figure
+from sign_up import main
 
-class DisplayReports(tk.Frame):
+class DisplayReports():
 
     def __init__(self, master):
         # Window 
