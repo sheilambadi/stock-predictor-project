@@ -35,7 +35,8 @@ def saveStockDate(ticker):
 
 
 # list of stocks
-stockTickers = ['AAPL', 'AMZN', 'FB', 'GM', 'GOOG', 'GOOGL', 'MSFT', 'NFLX', 'TSLA', 'TWTR']
+stockTickers = ['AAPL', 'AMZN']
+# stockTickers = ['AAPL', 'AMZN', 'FB', 'GM', 'GOOG', 'GOOGL', 'MSFT', 'NFLX', 'TSLA', 'TWTR']
 
 # Amazon stock market prices
 for stock in stockTickers:

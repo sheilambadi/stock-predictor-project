@@ -2,7 +2,8 @@ import pandas as pd
 import datetime
 
 # list of stocks
-stockTickers = ['aapl', 'amzn', 'fb', 'gm', 'goog', 'googl', 'msft', 'nflx', 'tsla', 'twtr']
+# stockTickers = ['aapl', 'amzn', 'fb', 'gm', 'goog', 'googl', 'msft', 'nflx', 'tsla', 'twtr']
+stockTickers = ['aapl', 'amzn']
 
 def calculate_average(filename):
     df = pd.read_csv('Tweets CSV Files/#' + filename + '.csv')

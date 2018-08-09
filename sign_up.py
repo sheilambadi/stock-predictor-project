@@ -1,97 +1,105 @@
 from tkinter import *
-import os
- 
-creds = 'tempfile.temp' # This just sets the variable creds to 'tempfile.temp'
- 
-def Signup(): # This is the signup definition, 
-    global pwordE # These globals just make the variables global to the entire script, meaning any definition can use them
-    global nameE
-    global roots
- 
-    roots = Tk() # This creates the window, just a blank one.
-    roots.title('Signup') # This renames the title of said window to 'signup'
-    intruction = Label(roots, text='Please Enter new Credidentials\n') # This puts a label, so just a piece of text saying 'please enter blah'
-    intruction.grid(row=0, column=0, sticky=E) # This just puts it in the window, on row 0, col 0. If you want to learn more look up a tkinter tutorial :)
- 
-    nameL = Label(roots, text='New Username: ') # This just does the same as above, instead with the text new username.
-    pwordL = Label(roots, text='New Password: ') # ^^
-    nameL.grid(row=1, column=0, sticky=W) # Same thing as the instruction var just on different rows. :) Tkinter is like that.
-    pwordL.grid(row=2, column=0, sticky=W) # ^^
- 
-    nameE = Entry(roots) # This now puts a text box waiting for input.
-    pwordE = Entry(roots, show='*') # Same as above, yet 'show="*"' What this does is replace the text with *, like a password box :D
-    nameE.grid(row=1, column=1) # You know what this does now :D
-    pwordE.grid(row=2, column=1) # ^^
- 
-    signupButton = Button(roots, text='Signup', command=FSSignup) # This creates the button with the text 'signup', when you click it, the command 'fssignup' will run. which is the def
-    signupButton.grid(columnspan=2, sticky=W)
-    roots.mainloop() # This just makes the window keep open, we will destroy it soon
- 
-def FSSignup():
-    with open(creds, 'w') as f: # Creates a document using the variable we made at the top.
-        f.write(nameE.get()) # nameE is the variable we were storing the input to. Tkinter makes us use .get() to get the actual string.
-        f.write('\n') # Splits the line so both variables are on different lines.
-        f.write(pwordE.get()) # Same as nameE just with pword var
-        f.close() # Closes the file
- 
-    roots.destroy() # This will destroy the signup window. :)
-    Login() # This will move us onto the login definition :D
- 
-def Login():
-    global nameEL
-    global pwordEL # More globals :D
-    global rootA
- 
-    rootA = Tk() # This now makes a new window.
-    rootA.title('Login') # This makes the window title 'login'
- 
-    intruction = Label(rootA, text='Please Login\n') # More labels to tell us what they do
-    intruction.grid(sticky=E) # Blahdy Blah
- 
-    nameL = Label(rootA, text='Username: ') # More labels
-    pwordL = Label(rootA, text='Password: ') # ^
-    nameL.grid(row=1, sticky=W)
-    pwordL.grid(row=2, sticky=W)
- 
-    nameEL = Entry(rootA) # The entry input
-    pwordEL = Entry(rootA, show='*')
-    nameEL.grid(row=1, column=1)
-    pwordEL.grid(row=2, column=1)
- 
-    loginB = Button(rootA, text='Login', command=CheckLogin) # This makes the login button, which will go to the CheckLogin def.
-    loginB.grid(columnspan=2, sticky=W)
- 
-    rmuser = Button(rootA, text='Delete User', fg='red', command=DelUser) # This makes the deluser button. blah go to the deluser def.
-    rmuser.grid(columnspan=2, sticky=W)
-    rootA.mainloop()
- 
-def CheckLogin():
-    with open(creds) as f:
-        data = f.readlines() # This takes the entire document we put the info into and puts it into the data variable
-        uname = data[0].rstrip() # Data[0], 0 is the first line, 1 is the second and so on.
-        pword = data[1].rstrip() # Using .rstrip() will remove the \n (new line) word from before when we input it
- 
-    if nameEL.get() == uname and pwordEL.get() == pword: # Checks to see if you entered the correct data.
-        r = Tk() # Opens new window
-        r.title(':D')
-        r.geometry('150x50') # Makes the window a certain size
-        rlbl = Label(r, text='\n[+] Logged In') # "logged in" label
-        rlbl.pack() # Pack is like .grid(), just different
-        r.mainloop()
-    else:
-        r = Tk()
-        r.title('D:')
-        r.geometry('150x50')
-        rlbl = Label(r, text='\n[!] Invalid Login')
-        rlbl.pack()
-        r.mainloop()
- 
-def DelUser():
-    os.remove(creds) # Removes the file
-    rootA.destroy() # Destroys the login window
-    Signup() # And goes back to the start!
- 
-if os.path.isfile(creds):
-    Login()
-else: # This if else statement checks to see if the file exists. If it does it will go to Login, if not it will go to Signup :)
-    Signup()
+from tkinter import messagebox as ms
+import sqlite3
+
+# create database and add users (if it does not not exists)
+with sqlite3.connect('users.db') as db:
+    c = db.cursor()
+
+c.execute('CREATE TABLE IF NOT EXISTS user (username TEXT NOT NULL ,password TEXT NOT NULL);')
+db.commit()
+db.close()
+
+#main Class
+class main:
+    def __init__(self,master):
+    	# Window 
+        self.master = master
+        # Some Usefull variables
+        self.username = StringVar()
+        self.password = StringVar()
+        self.n_username = StringVar()
+        self.n_password = StringVar()
+        #Create Widgets
+        self.widgets()
+
+    #Login Function
+    def login(self):
+    	#Establish Connection
+        with sqlite3.connect('users.db') as db:
+            c = db.cursor()
+
+        #Find user If there is any take proper action
+        find_user = ('SELECT * FROM user WHERE username = ? and password = ?')
+        c.execute(find_user,[(self.username.get()),(self.password.get())])
+        result = c.fetchall()
+        if result:
+            self.logf.pack_forget()
+            ms.showinfo('Welcome', 'Welcome \n' + self.username.get())
+            self.head['pady'] = 150
+        else:
+            ms.showerror('Error!','Username Not Found.')
+            
+    def new_user(self):
+    	#Establish Connection
+        with sqlite3.connect('users.db') as db:
+            c = db.cursor()
+
+        #Find Existing username if any take proper action
+        find_user = ('SELECT * FROM user WHERE username = ?')
+        c.execute(find_user,[(self.username.get())])        
+        if c.fetchall():
+            ms.showerror('Error!','Username Taken Try a Diffrent One.')
+        else:
+            ms.showinfo('Success!','Account Created!')
+            self.log()
+        #Create New Account 
+        insert = 'INSERT INTO user(username,password) VALUES(?,?)'
+        c.execute(insert,[(self.n_username.get()),(self.n_password.get())])
+        db.commit()
+
+        #Frame Packing Methords
+    def log(self):
+        self.username.set('')
+        self.password.set('')
+        self.crf.pack_forget()
+        self.head['text'] = 'Login'
+        self.logf.pack()
+        
+    def cr(self):
+        self.n_username.set('')
+        self.n_password.set('')
+        self.logf.pack_forget()
+        self.head['text'] = 'Create Account'
+        self.crf.pack()
+        
+    #Draw Widgets
+    def widgets(self):
+        self.head = Label(self.master,text = 'Login',font = ('',35),pady = 10)
+        self.head.pack()
+        self.logf = Frame(self.master,padx =10,pady = 10)
+        Label(self.logf,text = 'Username: ',font = ('',20),pady=5,padx=5).grid(sticky = W)
+        Entry(self.logf,textvariable = self.username,bd = 5,font = ('',15)).grid(row=0,column=1)
+        Label(self.logf,text = 'Password: ',font = ('',20),pady=5,padx=5).grid(sticky = W)
+        Entry(self.logf,textvariable = self.password,bd = 5,font = ('',15),show = '*').grid(row=1,column=1)
+        Button(self.logf,text = ' Create Account ',bd = 3 ,font = ('',15),padx=5,pady=5,command=self.cr).grid()
+        Button(self.logf,text = ' Login ',bd = 3 ,font = ('',15),padx=5,pady=5,command=self.login).grid(row=2,column=1)
+        self.logf.pack()
+        
+        self.crf = Frame(self.master,padx =10,pady = 10)
+        Label(self.crf,text = 'Username: ',font = ('',20),pady=5,padx=5).grid(sticky = W)
+        Entry(self.crf,textvariable = self.n_username,bd = 5,font = ('',15)).grid(row=0,column=1)
+        Label(self.crf,text = 'Password: ',font = ('',20),pady=5,padx=5).grid(sticky = W)
+        Entry(self.crf,textvariable = self.n_password,bd = 5,font = ('',15),show = '*').grid(row=1,column=1)
+        Button(self.crf,text = 'Create Account',bd = 3 ,font = ('',15),padx=5,pady=5,command=self.new_user).grid()
+        Button(self.crf,text = 'Go to Login',bd = 3 ,font = ('',15),padx=5,pady=5,command=self.log).grid(row=2,column=1)
+
+    
+
+if __name__ == '__main__':
+	#Create Object and setup window
+    root = Tk()
+    root.title('Stock Predictor')
+    root.geometry('720x480')
+    main(root)
+    root.mainloop()
