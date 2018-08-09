@@ -49,6 +49,19 @@ def getClickedTicker(ticker):
     predictions = model.predict(X_test)
     return [predictions, y_test]
 
+    # Plot the predictions!
+def plotHybridPredictions(ticker):
+    getClickedTicker(ticker)
+    predictions1, y_test1 = getClickedTicker(ticker)
+    plt.plot(predictions1 ,color='red', label='Predicted Values')
+    plt.plot(y_test1, color='blue', label='Actual Test Values')
+    plt.title(ticker + ' Stock Sentiment Hybrid Model')
+    plt.ylabel('Predicted Value (Normalized)');
+    plt.xlabel('No. of Days')
+    plt.legend(loc='upper left')
+    plt.show()
+
+'''
 def plotHybridPredictions(window, ticker):
     getClickedTicker(ticker)
     predictions1, y_test1 = getClickedTicker(ticker)
@@ -65,3 +78,4 @@ def plotHybridPredictions(window, ticker):
     canvas = FigureCanvasTkAgg(fig, master=window)
     canvas.get_tk_widget().pack(side=tk.LEFT, expand=True)
     canvas.draw()
+'''

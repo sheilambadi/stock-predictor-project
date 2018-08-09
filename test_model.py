@@ -51,7 +51,18 @@ def getTickerClicked(ticker):
     #print(X_test)
 
 # Plot the predictions!
-def plotPredictions(window, ticker):
+def plotPredictions(ticker):
+    getTickerClicked(ticker)
+    predictions1, y_test1 = getTickerClicked(ticker)
+    plt.plot(predictions1 ,color='red', label='Predicted Values')
+    plt.plot(y_test1, color='blue', label='Actual Test Values')
+    plt.title(ticker + ' Model with Stock Prices Only')
+    plt.ylabel('Predicted Value (Normalized)');
+    plt.xlabel('No. of Days')
+    plt.legend(loc='upper left')
+    plt.show()
+'''
+def plotPredictions(ticker):
     getTickerClicked(ticker)
     predictions1, y_test1 = getTickerClicked(ticker)
     fig = Figure(figsize=(6,4))
@@ -66,6 +77,7 @@ def plotPredictions(window, ticker):
     canvas = FigureCanvasTkAgg(fig, master=window)
     canvas.get_tk_widget().pack(side=tk.LEFT, expand=True)
     canvas.draw()
+    '''
 
 
 
