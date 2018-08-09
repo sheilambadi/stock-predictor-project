@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from test_model import plotPredictions
 from test_hybrid import plotHybridPredictions
+from sign_up import main
 
 LARGE_FONT= ("Verdana", 12)
 
@@ -13,7 +14,8 @@ class DisplayPlots(tk.Tk):
         tk.Tk.wm_title(self, "Stock Predictor")
         tk.Tk.wm_geometry(self, "650x650")
         
-        
+        displayUI = main(self)
+
         container = tk.Frame(self)
         container.pack(side="top", fill="both", expand = True)
         container.grid_rowconfigure(0, weight=1)
