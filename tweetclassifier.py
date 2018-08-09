@@ -5,7 +5,8 @@ from textblob import TextBlob
 from setup import *
 
 # list of stocks
-stockTickers = ['#aapl', '#amzn', '#fb', '#gm', '#goog', '#googl', '#msft', '#nflx', '#tsla', '#twtr']
+# stockTickers = ['#aapl', '#amzn', '#fb', '#gm', '#goog', '#googl', '#msft', '#nflx', '#tsla', '#twtr']
+stockTickers = ['#aapl', '#amzn']
 
 def getTweets(searchKey):
     results = filterTweets(searchKey)
@@ -27,6 +28,7 @@ def tweets(search):
                 thewriter.writerow({'searchKey' : str(search), 'tweetId' : tweet.id,'tweetDate': tweet.created_at, 'tweet' : clean_tweet, 'polarity':polarity})
 
 # looping through stock ticker list and averaging tweets
-for ticker in stockTickers:
-    tweets(ticker)
-    print(ticker + ' saved')
+def getTwitterData():
+    for ticker in stockTickers:
+        tweets(ticker)
+        print(ticker + ' saved')

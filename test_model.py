@@ -68,23 +68,4 @@ def plotPredictions(window, ticker):
     canvas.draw()
 
 
-'''
-future = []
-currentStep = X_test[:,:,:] #last step from the previous prediction
-
-
-for i in range(50):
-    currentStep = model.predict(X_test) #get the next step
-    future.append(currentStep) #store the future steps    
-
-predicted_values = future
-print(predicted_values)
-
-#after processing a sequence, reset the states for safety
-model.reset_states()
-
-# Plot the predictions!
-plt.plot(predicted_values)
-plt.show()
-'''
 
