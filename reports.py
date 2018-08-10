@@ -37,7 +37,8 @@ class DisplayReports():
         helpMenu = Menu(menu)
         menu.add_cascade(label='Help', menu=helpMenu)
         helpMenu.add_command(label='About', command=self.about)
-
+        Label(topFrame,text = 'Stock Predictor',font = ('',35), fg='blue', pady = 10).grid(sticky = W)
+        Label(topFrame,text = 'NB: Stream Tweets to get updated ones (Internet connection needed)' ,font = ('',14, 'italic'), fg='red', pady=5,padx=5).grid(sticky = W)
         # middle Frame
         self.middlePart()
         # status bar
@@ -63,11 +64,14 @@ class DisplayReports():
     def middlePart(self):
         # company stock
         
+        '''
         self.head = Label(self.master,text = 'Stock Predictor',font = ('',35), fg='blue', pady = 10)
         self.head.pack()
+        '''
         
         self.middleFrame = Frame(self.master)
        
+        
         Label(self.middleFrame,text = 'Stream Tweets: ',font = ('',20), pady=5,padx=5).grid(sticky = W)
         Button(self.middleFrame,text = 'Get Tweets!      ' ,bd = 3 ,font = ('',15),padx=5,pady=5, bg='green',fg='white', command = getTwitterData).grid(row=0,column=1, sticky=W)
         Label(self.middleFrame,text = 'Stream Stock Data: ',font = ('',20), pady=5,padx=5).grid(sticky = W)

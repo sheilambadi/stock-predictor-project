@@ -22,10 +22,13 @@ from numpy import newaxis
 # load training data
 def getTickerClicked(ticker):
     # df = pd.read_csv('Stock CSV Files/stock_market_data-AAPL.csv')
-    df = pd.read_csv('Stock CSV Files/stock_market_data-'+ ticker +'.csv')
+    # df = pd.read_csv('Stock CSV Files/stock_market_data-'+ ticker +'.csv')
+    hybrid_columns = ['Date','Low','High','Close','Open','Volume', 'Adj Close', 'Polarity', 'Ticker']
+    df = pd.read_csv('stock_polarity_data.csv', names = hybrid_columns)
 
     # Sort DataFrame by date
-    df = df.sort_values('Date')
+    # df = df.sort_values('Date')
+    df = df.loc[df['Ticker'] == ticker]
 
     # print(df)
 
@@ -65,7 +68,7 @@ def plotPredictions(ticker):
     plt.plot(predictions1 ,color='red', label='Predicted Values')
     plt.plot(y_test1, color='blue', label='Actual Test Values')
     plt.title(ticker + ' Model with Stock Prices Only')
-    plt.text(0,0.035,'RMSE is '+ str(round((math.sqrt(trainedScore[0]))*100,4))+'%', bbox=dict(facecolor='red', alpha=0.5))
+    plt.text(0.4,0.4,'RMSE is '+ str(round((math.sqrt(trainedScore[0]))*100,4))+'%', bbox=dict(facecolor='red', alpha=0.5))
     plt.ylabel('Predicted Value (Normalized)');
     plt.xlabel('No. of Days')
     plt.legend(loc='upper left')
