@@ -44,19 +44,28 @@ def getTickerClicked(ticker):
 
     window = 5
     X_train, y_train, X_test, y_test = load_data(df_normalized[::-1], 5)
+
     # make a prediction
     # creates states
     predictions = model.predict(X_test)
-    return [predictions, y_test]
+
+    # Calculate RMS/RMSE results
+    trainScore = model.evaluate(X_train, y_train, verbose=0)
+    print('Train Score: %.2f MSE (%.2f RMSE)' % (trainScore[0], math.sqrt(trainScore[0])))
+
+    testScore = model.evaluate(X_test, y_test, verbose=0)
+    print('Test Score: %.2f MSE (%.2f RMSE)' % (testScore[0], math.sqrt(testScore[0])))
+    return [predictions, y_test,testScore]
     #print(X_test)
 
 # Plot the predictions!
 def plotPredictions(ticker):
     getTickerClicked(ticker)
-    predictions1, y_test1 = getTickerClicked(ticker)
+    predictions1, y_test1, trainedScore = getTickerClicked(ticker)
     plt.plot(predictions1 ,color='red', label='Predicted Values')
     plt.plot(y_test1, color='blue', label='Actual Test Values')
     plt.title(ticker + ' Model with Stock Prices Only')
+    plt.text(0,0.035,'RMSE is '+ str(round((math.sqrt(trainedScore[0]))*100,4))+'%', bbox=dict(facecolor='red', alpha=0.5))
     plt.ylabel('Predicted Value (Normalized)');
     plt.xlabel('No. of Days')
     plt.legend(loc='upper left')

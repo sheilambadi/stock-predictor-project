@@ -44,17 +44,25 @@ def getClickedTicker(ticker):
     window = 5
     X_train, y_train, X_test, y_test = load_data(df_normalized[::-1], window)
 
+    # Calculate RMS/RMSE results
+    trainScore = model.evaluate(X_train, y_train, verbose=0)
+    print('Train Score: %.2f MSE (%.2f RMSE)' % (trainScore[0], math.sqrt(trainScore[0])))
+
+    testScore = model.evaluate(X_test, y_test, verbose=0)
+    print('Test Score: %.2f MSE (%.2f RMSE)' % (testScore[0], math.sqrt(testScore[0])))
+
     # make a prediction
     # creates states
     predictions = model.predict(X_test)
-    return [predictions, y_test]
+    return [predictions, y_test, testScore]
 
     # Plot the predictions!
 def plotHybridPredictions(ticker):
     getClickedTicker(ticker)
-    predictions1, y_test1 = getClickedTicker(ticker)
+    predictions1, y_test1, trainedScore = getClickedTicker(ticker)
     plt.plot(predictions1 ,color='red', label='Predicted Values')
     plt.plot(y_test1, color='blue', label='Actual Test Values')
+    plt.text(0.4,0.4,'RMSE is '+ str(round((math.sqrt(trainedScore[0]))*100,4))+'%', bbox=dict(facecolor='red', alpha=0.5))
     plt.title(ticker + ' Stock Sentiment Hybrid Model')
     plt.ylabel('Predicted Value (Normalized)');
     plt.xlabel('No. of Days')

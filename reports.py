@@ -63,15 +63,15 @@ class DisplayReports():
     def middlePart(self):
         # company stock
         
-        self.head = Label(self.master,text = 'Stock Predictor',font = ('',35),pady = 10)
+        self.head = Label(self.master,text = 'Stock Predictor',font = ('',35), fg='blue', pady = 10)
         self.head.pack()
         
         self.middleFrame = Frame(self.master)
        
         Label(self.middleFrame,text = 'Stream Tweets: ',font = ('',20), pady=5,padx=5).grid(sticky = W)
-        Button(self.middleFrame,text = 'Get Tweets!      ' ,bd = 3 ,font = ('',15),padx=5,pady=5, command = getTwitterData).grid(row=0,column=1, sticky=W)
+        Button(self.middleFrame,text = 'Get Tweets!      ' ,bd = 3 ,font = ('',15),padx=5,pady=5, bg='green',fg='white', command = getTwitterData).grid(row=0,column=1, sticky=W)
         Label(self.middleFrame,text = 'Stream Stock Data: ',font = ('',20), pady=5,padx=5).grid(sticky = W)
-        Button(self.middleFrame,text = 'Get Stock Data!' ,bd = 3 ,font = ('',15),padx=5,pady=5, command=getStockData).grid(row=1,column=1, sticky=W)
+        Button(self.middleFrame,text = 'Get Stock Data!' ,bd = 3 ,font = ('',15),padx=5,pady=5,bg='green',fg='white', command=getStockData).grid(row=1,column=1, sticky=W)
         Label(self.middleFrame,text = 'Plot Stock Graph: ',font = ('',20), pady=5,padx=5).grid(sticky = W)
         Label(self.middleFrame,text = 'Plot Hybrid Graph: ',font = ('',20), pady=5,padx=5).grid(sticky = W)
         # create dropdown list
