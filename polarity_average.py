@@ -17,6 +17,7 @@ def calculate_average(filename):
     print(df2)
 
 # looping through stock ticker list and saving tweets
-for ticker in stockTickers:
-    calculate_average(ticker)
-    print(ticker + ' saved')
+def calculateAvgPolarity():
+    for ticker in stockTickers:
+        calculate_average(ticker)
+        print(ticker + ' saved')

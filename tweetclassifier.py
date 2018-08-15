@@ -3,6 +3,7 @@ import re
 import textblob
 from textblob import TextBlob
 from setup import *
+from polarity_average import calculateAvgPolarity
 
 # list of stocks
 # stockTickers = ['#aapl', '#amzn', '#fb', '#gm', '#goog', '#googl', '#msft', '#nflx', '#tsla', '#twtr']
@@ -32,3 +33,6 @@ def getTwitterData():
     for ticker in stockTickers:
         tweets(ticker)
         print(ticker + ' saved')
+        calculateAvgPolarity()
+
+getTwitterData()

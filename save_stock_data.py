@@ -4,7 +4,7 @@ from pandas_datareader import data
 import datetime as dt
 import urllib.request, json
 import numpy as np
-
+from appended_file import appendPolarity
 def saveStockDate(ticker):
     # alpha vantage api key
     api_key = '6BXJN99BEYM5VWU3'
@@ -42,3 +42,6 @@ stockTickers = ['AAPL', 'AMZN']
 def getStockData():
     for stock in stockTickers:
         saveStockDate(stock)
+        appendPolarity()
+
+getStockData()

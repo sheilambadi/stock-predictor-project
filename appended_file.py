@@ -16,5 +16,7 @@ def save_appended_file(ticker):
 # list of stocks
 stockTickers = ['aapl', 'amzn', 'fb', 'gm', 'googl', 'msft', 'nflx', 'tsla', 'twtr']
 #stockTickers = ['aapl', 'amzn']
-for ticker in stockTickers:
-    save_appended_file(ticker)
+def appendPolarity():
+    for ticker in stockTickers:
+        save_appended_file(ticker)
+        print(ticker+'appended')
