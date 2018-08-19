@@ -21,16 +21,11 @@ from numpy import newaxis
 
 # load training data
 def getTickerClicked(ticker):
-    # df = pd.read_csv('Stock CSV Files/stock_market_data-AAPL.csv')
-    # df = pd.read_csv('Stock CSV Files/stock_market_data-'+ ticker +'.csv')
     hybrid_columns = ['Date','Low','High','Close','Open','Volume', 'Adj Close', 'Polarity', 'Ticker']
     df = pd.read_csv('stock_polarity_data.csv', names = hybrid_columns)
 
-    # Sort DataFrame by date
-    # df = df.sort_values('Date')
+    # Filter by stock ticker
     df = df.loc[df['Ticker'] == ticker]
-
-    # print(df)
 
     # normalize data
     cols = [2,3,4,5,6,7]
@@ -59,7 +54,6 @@ def getTickerClicked(ticker):
     testScore = model.evaluate(X_test, y_test, verbose=0)
     print('Test Score: %.2f MSE (%.2f RMSE)' % (testScore[0], math.sqrt(testScore[0])))
     return [predictions, y_test,testScore]
-    #print(X_test)
 
 # Plot the predictions!
 def plotPredictions(ticker):
@@ -73,23 +67,3 @@ def plotPredictions(ticker):
     plt.xlabel('No. of Days')
     plt.legend(loc='upper left')
     plt.show()
-'''
-def plotPredictions(ticker):
-    getTickerClicked(ticker)
-    predictions1, y_test1 = getTickerClicked(ticker)
-    fig = Figure(figsize=(6,4))
-    a = fig.add_subplot(121)
-    # The adjusted close accounts for stock splits, so that is what wes graph
-    a.plot(predictions1 ,color='red', label='Predicted Values')
-    a.plot(y_test1,color='blue', label='Actual Test Values')
-    a.set_title(ticker + ' Model with Stock Prices Only')
-    a.set_ylabel('Predicted Value (Normalized)');
-    a.set_xlabel('No. of Days')
-    a.legend(loc='upper left')
-    canvas = FigureCanvasTkAgg(fig, master=window)
-    canvas.get_tk_widget().pack(side=tk.LEFT, expand=True)
-    canvas.draw()
-    '''
-
-
-

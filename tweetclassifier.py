@@ -5,7 +5,7 @@ from textblob import TextBlob
 from setup import *
 from polarity_average import calculateAvgPolarity
 
-# list of stocks
+# list of stocks, use the 2 stocks to save streamin time
 # stockTickers = ['#aapl', '#amzn', '#fb', '#gm', '#goog', '#googl', '#msft', '#nflx', '#tsla', '#twtr']
 stockTickers = ['#aapl', '#amzn']
 
@@ -34,5 +34,3 @@ def getTwitterData():
         tweets(ticker)
         print(ticker + ' saved')
         calculateAvgPolarity()
-
-getTwitterData()
