@@ -10,7 +10,9 @@ Install the libraries that this project requires by running the command in a com
 `pip install -r requirements.txt `
 
 ## Usage
-Run the following command to open the UI
+Open command prompt in the directory where this project is located.
+
+Run the following command in the command prompt to open the UI
 
 `python3 reports.py `
 
