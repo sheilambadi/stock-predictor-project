@@ -35,4 +35,4 @@ def getTwitterData():
         print(ticker + ' saved')
         calculateAvgPolarity()
 
-getTwitterData()
+# getTwitterData()

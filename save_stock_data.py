@@ -44,4 +44,4 @@ def getStockData():
         saveStockDate(stock)
         appendPolarity()
 
-getStockData()
+# getStockData()
