@@ -16,16 +16,18 @@ def save_appended_file(ticker):
 
     # append data of the same date together
     # data too few so won't be used in model until it grows significantly
+    '''
     sum_file = "stock_polarity_sum_data.csv"
     hybrid_columns = ['Date','Low','High','Close','Open','Volume', 'Adj Close', 'Polarity', 'Ticker']
     # load training data
     df = pd.read_csv('stock_polarity_data.csv', names = hybrid_columns)
     sum_df = df.groupby(['Date', 'Ticker']).mean()
     sum_df.to_csv(sum_file, mode = 'a', header=False)
-
+    '''
 
 # list of stocks
-stockTickers = ['aapl', 'amzn', 'fb', 'gm', 'googl', 'msft', 'nflx', 'tsla', 'twtr']
+# stockTickers = ['aapl', 'amzn', 'fb', 'gm', 'googl', 'msft', 'nflx', 'tsla', 'twtr']
+stockTickers = ['aapl', 'amzn']
 
 # append data for all stock tickers
 def appendPolarity():
