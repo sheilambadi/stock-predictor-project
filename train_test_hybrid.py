@@ -62,25 +62,5 @@ model.save('Trained Stock Model/'+'hybrid_stock_predictor.h5')
 
 plt.plot(predictions ,color='red', label='Predicted Values')
 plt.plot(y_test,color='blue', label='Actual Test Values')
-# plt.set_title('Stock Sentiment Hybrid Model')
-# plt.set_ylabel('Normalized Prices');
-# plt.set_xlabel('No. of Days')
 plt.legend(loc='upper left')
 plt.show()
-
-'''
-def plotHybridPredictions(window):
-    fig = Figure(figsize=(6,6))
-    a = fig.add_subplot(222)
-    # The adjusted close accounts for stock splits, so that is what wes graph
-    a.plot(predictions ,color='red', label='Predicted Values')
-    a.plot(y_test,color='blue', label='Actual Test Values')
-    a.set_title('Stock Sentiment Hybrid Model')
-    a.set_ylabel('Normalized Prices');
-    a.set_xlabel('No. of Days')
-    a.legend(loc='upper left')
-
-    canvas = FigureCanvasTkAgg(fig, master=window)
-    canvas.get_tk_widget().pack()
-    canvas.draw()
-'''

@@ -63,12 +63,6 @@ class DisplayReports():
 
     def middlePart(self):
         # company stock
-        
-        '''
-        self.head = Label(self.master,text = 'Stock Predictor',font = ('',35), fg='blue', pady = 10)
-        self.head.pack()
-        '''
-        
         self.middleFrame = Frame(self.master)
        
         
@@ -90,9 +84,7 @@ class DisplayReports():
         defaultValueHybrid.set(tickerListHybrid[0])
         tickerDropdownHybrid = OptionMenu(self.middleFrame, defaultValueHybrid, *tickerListHybrid, command=self.selectedTickerHybrid)
         tickerDropdownHybrid.grid(row=3, column=1)
-
-        #Button(self.middleFrame,text = 'Visualize' , font = ('',12),padx=2,pady=5, command=getStockData).grid(row=2,column=3, sticky=W)
-
+        
         self.middleFrame.pack(ipadx=10, ipady=10)
 
 root = Tk()

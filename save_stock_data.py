@@ -35,6 +35,7 @@ def saveStockDate(ticker):
 
 
 # list of stocks
+# only use the 2 stock tickers to save streaming time
 stockTickers = ['AAPL', 'AMZN']
 # stockTickers = ['AAPL', 'AMZN', 'FB', 'GM', 'GOOG', 'GOOGL', 'MSFT', 'NFLX', 'TSLA', 'TWTR']
 

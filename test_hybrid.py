@@ -56,7 +56,7 @@ def getClickedTicker(ticker):
     predictions = model.predict(X_test)
     return [predictions, y_test, testScore]
 
-    # Plot the predictions!
+# Plot the predictions!
 def plotHybridPredictions(ticker):
     getClickedTicker(ticker)
     predictions1, y_test1, trainedScore = getClickedTicker(ticker)
@@ -68,22 +68,3 @@ def plotHybridPredictions(ticker):
     plt.xlabel('No. of Days')
     plt.legend(loc='upper left')
     plt.show()
-
-'''
-def plotHybridPredictions(window, ticker):
-    getClickedTicker(ticker)
-    predictions1, y_test1 = getClickedTicker(ticker)
-    fig = Figure(figsize=(6,4))
-    a = fig.add_subplot(122)
-    # The adjusted close accounts for stock splits, so that is what wes graph
-    a.plot(predictions1 ,color='red', label='Predicted Values')
-    a.plot(y_test1,color='blue', label='Actual Test Values')
-    a.set_title(ticker + ' Stock Sentiment Hybrid Model')
-    a.set_ylabel('Predicted Value (Normalized)')
-    a.set_xlabel('No. of Days')
-    a.legend(loc='upper left')
-
-    canvas = FigureCanvasTkAgg(fig, master=window)
-    canvas.get_tk_widget().pack(side=tk.LEFT, expand=True)
-    canvas.draw()
-'''
